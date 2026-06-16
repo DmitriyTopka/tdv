@@ -479,6 +479,15 @@ fetch('index_data.json').then(r => r.json()).then(indexData => {
   }));
   renderAll(DATA);
 
+  // Auto-search from URL param ?q=MODEL (used by browser extension)
+  const urlQ = new URLSearchParams(window.location.search).get('q');
+  if (urlQ) {
+    const searchEl = document.getElementById('search');
+    searchEl.value = urlQ;
+    searchEl.dispatchEvent(new Event('input'));
+    searchEl.focus();
+  }
+
   // Patch: on first open, replace placeholder panel with real description
   document.querySelectorAll('.model-row').forEach(row => {
     const mainEl = row.querySelector('.model-row-main');
